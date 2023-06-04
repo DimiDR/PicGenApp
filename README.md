@@ -1,6 +1,14 @@
 # PicGenApp
 App to generate Pictures with AI
 
+React Native App with:
+- One area for picture display
+- One area for positiv prompt
+- One are for negativ prompt
+- One button "Generate Picture"
+- One checkmark "allow adult content"
+
+# Links
 Stable Diffusion as an API: Make a Person-Removing Microservice
 https://towardsdatascience.com/stable-diffusion-as-an-api-5e381aec1f6
 
