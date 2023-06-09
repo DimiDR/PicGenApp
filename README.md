@@ -37,7 +37,21 @@ http://127.0.0.1:7860/docs#/
 
 # launch backend server
 
-C:\Users\Rybak\Documents\StableDiffusion>python launch.py --nowebui --cors-allow-origins "\*
+...\Documents\StableDiffusion>python launch.py --nowebui --cors-allow-origins "\*"
+
+http://127.0.0.1:7861/docs#/
+
+--listen --api --cors-allow-origins=https://www.painthua.com --no-half
+
+...\Documents\StableDiffusion>python launch.py --nowebui --listen --api --cors-allow-origins=\*
+
+python launch.py --nowebui --listen=192.168.0.109
+
+# Run python test
+
+Start Anaconda VE
+CD ...\PicGenApp\StableDiffusion
+run: python test.py
 
 ## CORS Problem
 
@@ -101,3 +115,50 @@ You can also use --cors-allow-origins "\*" locally. But in production, use your 
 "save_images": false,
 "alwayson_scripts": {}
 }
+
+# API Help
+
+[-h] [--update-all-extensions] [--skip-python-version-check]
+[--skip-torch-cuda-test] [--reinstall-xformers] [--reinstall-torch]
+[--update-check] [--test-server] [--skip-prepare-environment] [--skip-install]
+[--data-dir DATA_DIR] [--config CONFIG] [--ckpt CKPT] [--ckpt-dir CKPT_DIR]
+[--vae-dir VAE_DIR] [--gfpgan-dir GFPGAN_DIR] [--gfpgan-model GFPGAN_MODEL]
+[--no-half] [--no-half-vae] [--no-progressbar-hiding]
+[--max-batch-count MAX_BATCH_COUNT] [--embeddings-dir EMBEDDINGS_DIR]
+[--textual-inversion-templates-dir TEXTUAL_INVERSION_TEMPLATES_DIR]
+[--hypernetwork-dir HYPERNETWORK_DIR] [--localizations-dir LOCALIZATIONS_DIR]
+[--allow-code] [--medvram] [--lowvram] [--lowram] [--always-batch-cond-uncond]
+[--unload-gfpgan] [--precision {full,autocast}] [--upcast-sampling] [--share]
+[--ngrok NGROK] [--ngrok-region NGROK_REGION] [--ngrok-options NGROK_OPTIONS]
+[--enable-insecure-extension-access]
+[--codeformer-models-path CODEFORMER_MODELS_PATH]
+[--gfpgan-models-path GFPGAN_MODELS_PATH]
+[--esrgan-models-path ESRGAN_MODELS_PATH]
+[--bsrgan-models-path BSRGAN_MODELS_PATH]
+[--realesrgan-models-path REALESRGAN_MODELS_PATH]
+[--clip-models-path CLIP_MODELS_PATH] [--xformers] [--force-enable-xformers]
+[--xformers-flash-attention] [--deepdanbooru] [--opt-split-attention]
+[--opt-sub-quad-attention] [--sub-quad-q-chunk-size SUB_QUAD_Q_CHUNK_SIZE]
+[--sub-quad-kv-chunk-size SUB_QUAD_KV_CHUNK_SIZE]
+[--sub-quad-chunk-threshold SUB_QUAD_CHUNK_THRESHOLD]
+[--opt-split-attention-invokeai] [--opt-split-attention-v1]
+[--opt-sdp-attention] [--opt-sdp-no-mem-attention]
+[--disable-opt-split-attention] [--disable-nan-check]
+[--use-cpu USE_CPU [USE_CPU ...]] [--listen] [--port PORT]
+[--show-negative-prompt] [--ui-config-file UI_CONFIG_FILE]
+[--hide-ui-dir-config] [--freeze-settings]
+[--ui-settings-file UI_SETTINGS_FILE] [--gradio-debug]
+[--gradio-auth GRADIO_AUTH] [--gradio-auth-path GRADIO_AUTH_PATH]
+[--gradio-img2img-tool GRADIO_IMG2IMG_TOOL]
+[--gradio-inpaint-tool GRADIO_INPAINT_TOOL]
+[--gradio-allowed-path GRADIO_ALLOWED_PATH] [--opt-channelslast]
+[--styles-file STYLES_FILE] [--autolaunch] [--theme THEME] [--use-textbox-seed]
+[--disable-console-progressbars] [--enable-console-prompts]
+[--vae-path VAE_PATH] [--disable-safe-unpickle] [--api] [--api-auth API_AUTH]
+[--api-log] [--nowebui] [--ui-debug-mode] [--device-id DEVICE_ID]
+[--administrator] [--cors-allow-origins CORS_ALLOW_ORIGINS]
+[--cors-allow-origins-regex CORS_ALLOW_ORIGINS_REGEX]
+[--tls-keyfile TLS_KEYFILE] [--tls-certfile TLS_CERTFILE]
+[--disable-tls-verify] [--server-name SERVER_NAME] [--gradio-queue]
+[--no-gradio-queue] [--skip-version-check] [--no-hashing]
+[--no-download-sd-model] [--subpath SUBPATH] [--add-stop-route]
