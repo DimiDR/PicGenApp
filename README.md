@@ -45,7 +45,7 @@ http://127.0.0.1:7861/docs#/
 
 ...\Documents\StableDiffusion>python launch.py --nowebui --listen --api --cors-allow-origins=\*
 
-python launch.py --nowebui --listen=192.168.0.109
+python launch.py --nowebui --listen
 
 # Run python test
 
