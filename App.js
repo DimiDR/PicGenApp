@@ -26,8 +26,8 @@ export default function App() {
     "(worst quality, low quality, blurry:1.66), (bad hand:1.4), watermark, (greyscale:0.88), multiple limbs, (deformed fingers, bad fingers:1.2), (ugly:1.3), monochrome, horror, geometry, bad anatomy, bad limbs, (Blurry pupil), (bad shading), error, bad composition, Extra fingers, strange fingers, Extra ears, extra leg, bad leg, disability, Blurry eyes, bad eyes, Twisted body, confusion, (bad legs:1.3)"
   );
   const [allowAdultContent, setAllowAdultContent] = useState(false);
-  const [height, setHeight] = useState(512); //1080
-  const [width, setWidth] = useState(512); // 566
+  const [height, setHeight] = useState(300); //1080
+  const [width, setWidth] = useState(300); // 566
   const [loading, setLoading] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
 
@@ -56,7 +56,7 @@ export default function App() {
           negative_prompt: negativePrompt,
           width: width,
           height: height,
-          steps: 50,
+          steps: 10,
         }
       );
       setGeneratedImage(response.data.images[0]);
@@ -67,34 +67,41 @@ export default function App() {
     }
   };
 
-  const handleSaveImage = async (uri, filename, mimetype) => {
-    alert(uri);
-    alert(filename);
-    alert(mimetype);
-    // if (Platform.OS === "android") {
-    //   const permissions =
-    //     await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-    //   if (permissions.granted) {
-    //     const base64 = await FileSystem.readAsStringAsync(uri, {
-    //       encoding: FileSystem.EncodingType.Base64,
-    //     });
-    //     await FileSystem.StorageAccessFramework.createFileAsync(
-    //       permissions.directoryUri,
-    //       filename,
-    //       mimetype
-    //     )
-    //       .then(async (uri) => {
-    //         await FileSystem.writeAsStringAsync(uri, base64, {
-    //           encoding: FileSystem.EncodingType.Base64,
-    //         });
-    //       })
-    //       .catch((e) => console.log(e));
-    //   } else {
-    //     shareAsync(uri);
-    //   }
-    // } else {
-    //   shareAsync(uri);
-    // }
+  const handleSaveImage = async () => {
+    // const uri = `data:image/png;base64,${generatedImage}`;
+    const uri = generatedImage;
+    const filename = "Input.png";
+    const mimetype = "image/png";
+    if (generatedImage) {
+      if (Platform.OS === "android") {
+        const permissions =
+          await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+        console.log(
+          "permissions.directoryUri************",
+          permissions.directoryUri
+        );
+        if (permissions.granted) {
+          // const base64 = await FileSystem.readAsStringAsync(uri, {
+          //   encoding: FileSystem.EncodingType.Base64,
+          // });
+          await FileSystem.StorageAccessFramework.createFileAsync(
+            permissions.directoryUri,
+            filename,
+            mimetype
+          )
+            .then(async (uri) => {
+              await FileSystem.writeAsStringAsync(uri, "base64", {
+                encoding: FileSystem.EncodingType.Base64,
+              });
+            })
+            .catch((e) => console.log(e));
+        } else {
+          shareAsync(uri);
+        }
+      } else {
+        shareAsync(uri);
+      }
+    }
   };
 
   return (
@@ -132,18 +139,9 @@ export default function App() {
           value={allowAdultContent}
           onValueChange={setAllowAdultContent}
         />
-        <Text style={styles.label}>Allow Adult Content!!!</Text>
+        <Text style={styles.label}>Allow Adult Content!!</Text>
       </View>
-      <Button
-        title="Save"
-        onPress={() =>
-          handleSaveImage(
-            `image/png;base64,${generatedImage}`,
-            "Input 2",
-            "image/png"
-          )
-        }
-      />
+      <Button title="Save" onPress={handleSaveImage} />
       <Button
         title={!timerActive ? "Generate Picture" : "Waiting"}
         onPress={generatePicture}
