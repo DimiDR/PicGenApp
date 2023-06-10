@@ -1,13 +1,21 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View, Image, TextInput, Button, Text, PermissionsAndroid, Platform } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  Button,
+  Text,
+  PermissionsAndroid,
+  Platform,
+} from "react-native";
 import Checkbox from "expo-checkbox";
 import requests from "requests";
-import React, { useState,useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios"; // For making API requests
-import Timer from './Timer';
-import * as FileSystem from 'expo-file-system';
-import { shareAsync } from 'expo-sharing';
-
+import Timer from "./Timer";
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
 
 export default function App() {
   const [generatedImage, setGeneratedImage] = useState();
@@ -22,7 +30,7 @@ export default function App() {
   const [width, setWidth] = useState(512); // 566
   const [loading, setLoading] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
-  
+
   const restartTimer = () => {
     setTimerActive(false);
   };
@@ -41,8 +49,8 @@ export default function App() {
     try {
       // Send the positive, negative prompts, and adult content flag to the backend server
       const response = await axios.post(
-        //`http://192.168.0.109:7861/sdapi/v1/txt2img`,
-        `http://192.168.0.201:7861/sdapi/v1/txt2img`,
+        `http://192.168.0.109:7861/sdapi/v1/txt2img`,
+        //`http://192.168.0.201:7861/sdapi/v1/txt2img`,
         {
           prompt: positivePrompt,
           negative_prompt: negativePrompt,
@@ -59,45 +67,35 @@ export default function App() {
     }
   };
 
-
-
-  const handleSaveImage = async ( filename, mimetype) => {
-    alert("1");
-    if (Platform.OS === "android") {
-      const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-      alert("2");
-      if (permissions.granted) {
-        //build the uri
-        const canvasRef = useRef(null);
-        const canvas = canvasRef.current;
-        const image = new Image();
-        const imageElement = document.getElementById('myImage');
-        alert("3");
-        image.onload = () => {
-          canvas.getContext('2d').drawImage(image, 0, 0);
-          const pngURI = canvas.toDataURL('image/png');
-          console.log(pngURI);
-          // You can perform further actions with the pngURI
-          alert(pngURI);
-        };
-    
-        image.src = imageElement.src;
-
-        const base64 = await FileSystem.readAsStringAsync(pngURI, { encoding: FileSystem.EncodingType.Base64 });
-        await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
-          .then(async (uri) => {
-            await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
-          })
-          .catch(e => console.log(e));
-      } else {
-        shareAsync(uri);
-      }
-    } else {
-      shareAsync(uri);
-    }
+  const handleSaveImage = async (uri, filename, mimetype) => {
+    alert(uri);
+    alert(filename);
+    alert(mimetype);
+    // if (Platform.OS === "android") {
+    //   const permissions =
+    //     await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+    //   if (permissions.granted) {
+    //     const base64 = await FileSystem.readAsStringAsync(uri, {
+    //       encoding: FileSystem.EncodingType.Base64,
+    //     });
+    //     await FileSystem.StorageAccessFramework.createFileAsync(
+    //       permissions.directoryUri,
+    //       filename,
+    //       mimetype
+    //     )
+    //       .then(async (uri) => {
+    //         await FileSystem.writeAsStringAsync(uri, base64, {
+    //           encoding: FileSystem.EncodingType.Base64,
+    //         });
+    //       })
+    //       .catch((e) => console.log(e));
+    //   } else {
+    //     shareAsync(uri);
+    //   }
+    // } else {
+    //   shareAsync(uri);
+    // }
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -134,10 +132,23 @@ export default function App() {
           value={allowAdultContent}
           onValueChange={setAllowAdultContent}
         />
-        <Text style={styles.label}>Allow Adult Content!</Text>
+        <Text style={styles.label}>Allow Adult Content!!!</Text>
       </View>
-      <Button title="Save Picture to Photo-Gallery" onPress={handleSaveImage( "file1.png", "image/png")} />
-      <Button title={!timerActive? "Generate Picture" : "Waiting"} onPress={generatePicture} disabled={timerActive} />
+      <Button
+        title="Save"
+        onPress={() =>
+          handleSaveImage(
+            `image/png;base64,${generatedImage}`,
+            "Input 2",
+            "image/png"
+          )
+        }
+      />
+      <Button
+        title={!timerActive ? "Generate Picture" : "Waiting"}
+        onPress={generatePicture}
+        disabled={timerActive}
+      />
       <Timer timerActive={timerActive} restartTimer={restartTimer} />
       <StatusBar style="auto" />
     </View>
