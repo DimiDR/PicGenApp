@@ -12,6 +12,7 @@
     "axios": "^1.4.0",
     "expo": "^48.0.0",
     "expo-checkbox": "^2.3.1",
+    "expo-sharing": "^11.2.2",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.8",
