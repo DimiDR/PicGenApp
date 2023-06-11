@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, TextInput, Button, Text } from "react-native";
 import Checkbox from "expo-checkbox";
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import Timer from "./Timer";
+import Timer from "./src/Timer";
 import DownloadBtn from "./src/DownloadBtn";
 
 export default function App() {
