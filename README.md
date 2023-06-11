@@ -85,3 +85,9 @@ at serveStatic (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\serve-static
 # take picture from system
 
 https://snack.expo.dev/@kartikeyvaish/document-picker-example
+
+# build APK
+
+https://stackoverflow.com/questions/44301539/react-native-generate-apk-and-ipa-using-expo
+
+https://docs.expo.dev/archive/classic-updates/building-standalone-apps/?redirected
