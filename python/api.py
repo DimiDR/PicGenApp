@@ -1,40 +1,36 @@
 from flask import Flask, Response, request
-import pdfkit
+#import pdfkit
 import json
 import base64
 import time
 import requests
 
 def submit_post(url: str, data: dict):
-    """
-    Submit a POST request to the given URL with the given data.
-    """
+    #Submit a POST request to the given URL with the given data.
     return requests.post(url, data=json.dumps(data))
 
 
 def save_encoded_image(b64_image: str, output_path: str):
-    """
-    Save the given image to the given output path.
-    """
+    #Save the given image to the given output path.
     with open(output_path, "wb") as image_file:
         image_file.write(base64.b64decode(b64_image))
 
 app = Flask(__name__)
-@app.route('/generate-pdf', methods=['GET'])
-def generate_pdf():
-    name = request.args.get('name')
-    email = request.args.get('email')
+# @app.route('/generate-pdf', methods=['GET'])
+# def generate_pdf():
+#     name = request.args.get('name')
+#     email = request.args.get('email')
 
-    html = f"<html><body><h1>Hi {name}</h1><h2>Your email is {email}</h2></body></html>"
-    pdf = pdfkit.from_string(html, False)
+#     html = f"<html><body><h1>Hi {name}</h1><h2>Your email is {email}</h2></body></html>"
+#     pdf = pdfkit.from_string(html, False)
 
-    headers = {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': f"attachment;filename={name}.pdf"
-    }
+#     headers = {
+#         'Content-Type': 'application/pdf',
+#         'Content-Disposition': f"attachment;filename={name}.pdf"
+#     }
 
-    response = Response(pdf, headers=headers)
-    return response
+#     response = Response(pdf, headers=headers)
+#     return response
 
 
 @app.route('/text2img', methods=['GET'])
@@ -50,6 +46,6 @@ def text2img():
     response = submit_post(txt2img_url, data)
     filename = time.strftime("%Y%m%d-%H%M%S") + "_picture.png"
     save_encoded_image(response.json()['images'][0], "TestPictures/" + filename)
-    return txt2img_url
+    return "File created: " + filename
 
 app.run();
