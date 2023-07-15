@@ -4,6 +4,8 @@ import json
 import base64
 import time
 import requests
+from nsfw_detector import predict
+model = predict.load_model('./python/nsfw_detector/model/saved_model.h5')
 
 def submit_post(url: str, data: dict):
     #Submit a POST request to the given URL with the given data.
@@ -14,6 +16,10 @@ def save_encoded_image(b64_image: str, output_path: str):
     #Save the given image to the given output path.
     with open(output_path, "wb") as image_file:
         image_file.write(base64.b64decode(b64_image))
+
+def nsfw_detector():
+    # Predict single image
+    return predict.classify(model, ['./python/TestPictures/hentai_test.jpg', './python/TestPictures/soft_hentai.png', './python/TestPictures/no_hentai.png', './python/TestPictures/almost_hentai.jpg'])
 
 app = Flask(__name__)
 # @app.route('/generate-pdf', methods=['GET'])
@@ -32,6 +38,9 @@ app = Flask(__name__)
 #     response = Response(pdf, headers=headers)
 #     return response
 
+@app.route('/testNSFW', methods=['GET'])
+def testNSFW():
+    return nsfw_detector()
 
 @app.route('/text2img', methods=['GET'])
 def text2img():

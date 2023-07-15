@@ -27,7 +27,7 @@ if __name__ == '__main__':
             'negative_prompt': safe_neg_prompt,
             'width': 512,
             'height': 512,
-            'steps': 50}
+            'steps': 30}
     response = submit_post(txt2img_url, data)
     filename = time.strftime("%Y%m%d-%H%M%S") + "_picture.png"
     save_encoded_image(response.json()['images'][0], "TestPictures/" + filename)
