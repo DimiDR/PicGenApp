@@ -1,6 +1,8 @@
 # PicGenApp
 
-App to generate Pictures with AI
+react navite app to generate pictures with AI stable diffusion.
+
+![Alt text](relative%20path/assets/AppExample.jpg?raw=true "App Screenshot")
 
 React Native App with:
 
@@ -52,42 +54,3 @@ python launch.py --nowebui --listen
 Start Anaconda VE
 CD ...\PicGenApp\StableDiffusion
 run: python test.py
-
-## CORS Problem
-
-https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/3734#discussioncomment-4786786
-You're using it wrong.
---cors-allow-origins "localhost"
-If that doesn't work, add the port of your frontend.
-You can add multiple, separated by commas if i'm not mistaken.
-I used this API in 100 requests/hour+ production app in september so I know for sure that it's atleast been working.
-
-You can also use --cors-allow-origins "\*" locally. But in production, use your frontend url.
-
-# download problem
-
-https://stackoverflow.com/questions/74280471/how-to-solve-expo-cli-request-entity-too-large
-
-You can run npm list -g to see which global libraries are installed and where they're located. Use npm list -g | head -1 for truncated output showing just the path. If you want to display only main packages not its sub-packages which installs along with it - you can use - npm list --depth=0 which will show all packages and for getting only globally installed packages, just add -g i.e. npm list -g --depth=0
-
-PayloadTooLargeError: request entity too large
-at readStream (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\raw-body\index.js:163:17)
-at getRawBody (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\raw-body\index.js:116:12)
-at read (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\body-parser\lib\read.js:79:3)
-at jsonParser (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\body-parser\lib\types\json.js:138:5)
-at call (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\connect\index.js:239:7)
-at next (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\connect\index.js:183:5)
-at remoteDevtoolsCorsMiddleware (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\@expo\dev-server\build\middleware\remoteDevtoolsCorsMiddleware.js:36:3)
-at call (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\connect\index.js:239:7)
-at next (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\connect\index.js:183:5)
-at serveStatic (C:\Users\Rybak\Desktop\react\PicGenApp\node_modules\serve-static\index.js:75:16)
-
-# take picture from system
-
-https://snack.expo.dev/@kartikeyvaish/document-picker-example
-
-# build APK
-
-https://stackoverflow.com/questions/44301539/react-native-generate-apk-and-ipa-using-expo
-
-https://docs.expo.dev/archive/classic-updates/building-standalone-apps/?redirected

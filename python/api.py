@@ -69,6 +69,10 @@ def write_log(image_path: str, log_info:str):
 #*** Start Service ****
 app = Flask(__name__)
 
+@app.route('/', methods=['GET'])
+def server_test():
+    return "Server is running"
+
 @app.route('/text2img', methods=['GET'])
 def text2img():
     nsfw_neg_prompt = "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, (worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
@@ -121,5 +125,7 @@ def posttext2img():
     else:
         return "Picture created in " + output_file_path + ". It is appropriate."
 
+if __name__ == '__main__':
+    app.run(debug=True, port=5005)
 
 app.run()
