@@ -12,10 +12,10 @@ Runs on https://expo.dev/
 ## Backend
 Pathon with multiple servers. Runs on local system. Graphic card user GTX 1080 TI.
 - Stable Diffusion server loaded with Automatic1111 package. https://github.com/AUTOMATIC1111/
-- Flask Server to have a customizable server leyer on top of stable diffusion and run stable diffusion as standard to not disturb the updates. "Waitress" for production WSGI server to the internet. https://flask.palletsprojects.com/en/2.3.x/deploying/waitress/
-- NSFW runs in Flast server, to check for adult content. But it is not an own micro service. It uses code and model of GantMan, but coding was adjusted. https://github.com/GantMan/nsfw_model
+- Flask Server to have a customizable server leyer on top of stable diffusion. Stable diffusion server will be in standard and updated by Automatic1111. "Waitress" for production WSGI server to the internet. https://flask.palletsprojects.com/en/2.3.x/deploying/waitress/
+- NSFW Detector runs in Flast server, to check for adult content. But it is not an own micro service. It uses code and model of GantMan, however coding was adjusted to fit the requirenments. https://github.com/GantMan/nsfw_model
 
-Testing can be done also on pythis level with 
+Testing can be done also on pythis level with the files test_flask.py and test_stablediffusion.py.
 
 ### launch backend servers
 Download the files here https://github.com/AUTOMATIC1111/
