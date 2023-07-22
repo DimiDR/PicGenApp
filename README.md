@@ -2,7 +2,7 @@
 
 react navite app to generate pictures with AI stable diffusion.
 
-![Alt text](relative%20path/assets/AppExample.jpg?raw=true "App Screenshot")
+![Alt text](/assets/AppExample.jpg?raw=true "App Screenshot")
 
 React Native App with:
 
