@@ -1,56 +1,26 @@
 # PicGenApp
 
-react navite app to generate pictures with AI stable diffusion.
+React Navite app to generate pictures with AI stable diffusion.
 
 ![Alt text](/assets/AppExampleSmall.jpg "App Screenshot")
 
-React Native App with:
+## Frontend
+React Native not yet optimized for IOS or Android.
+Runs on https://expo.dev/
 
-- One area for picture display
-- One area for positiv prompt
-- One are for negativ prompt
-- One button "Generate Picture"
-- One checkmark "allow adult content"
+## Backend
+Pathon with multiple servers. Runs on local system. Graphic card user GTX 1080 TI.
+- Stable Diffusion server loaded with Automatic1111 package. https://github.com/AUTOMATIC1111/
+- Flask Server to have a customizable server leyer on top of stable diffusion and run stable diffusion as standard to not disturb the updates. "Waitress" for production WSGI server
+- NSFW runs in Flast server, to check for adult content. But it is not an own micro service. https://github.com/GantMan/nsfw_model
 
-# Links
+### launch backend server
 
-Stable Diffusion as an API: Make a Person-Removing Microservice
-https://towardsdatascience.com/stable-diffusion-as-an-api-5e381aec1f6
+Launch stable diffusion:
 
-Stable Diffusion-Based Image Generation Web Application Using Fast API & React
-https://medium.com/geekculture/stable-diffusion-based-image-generation-web-application-using-fast-api-react-d519078567bf
+Switch to the folder of stable diffusion, this will start a backend server withouth fronten WebUI '...\StableDiffusion>python launch.py --nowebui --listen'
 
-Stable Diffusion web UI
-https://github.com/TomJamesPearce/stable-diffusion-webui-api
+Launch flask
 
-Reddit: Stable Diffusion WebUI API
-https://www.reddit.com/r/StableDiffusion/comments/10o8wa2/stable_diffusion_webui_api/
+Stay in the main folder and do not cd into the python folder! '...\PicGenApp\python python/apy.py'
 
-Stable Diffusion API Docs
-https://stablediffusionapi.com/docs/
-
-API Docs Automatic1111
-https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/API
-
-Basic API Doku
-https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/3734
-
-http://127.0.0.1:7860/docs#/
-
-# launch backend server
-
-...\Documents\StableDiffusion>python launch.py --nowebui --cors-allow-origins "\*"
-
-http://127.0.0.1:7861/docs#/
-
---listen --api --cors-allow-origins=https://www.painthua.com --no-half
-
-...\Documents\StableDiffusion>python launch.py --nowebui --listen --api --cors-allow-origins=\*
-
-python launch.py --nowebui --listen
-
-# Run python test
-
-Start Anaconda VE
-CD ...\PicGenApp\StableDiffusion
-run: python test.py
