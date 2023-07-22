@@ -44,7 +44,8 @@ def nsfw_detector(image_path:str, path:str):
     log_info += f"Creation date: {time.strftime('%Y-%m-%d %H:%M:%S')}\n"
     log_info += f"NSFW detection results:\n{predict_df}\n"
     write_log(path, log_info)
-    if porn > 0.05 and hentai > 0.15:
+    #*******HERE NSFW TRESHHOLDS**********
+    if (porn > 0.04 and hentai > 0.15) or hentai > 0.3:
         return True # explicit content
     else:
         return False # not explicit content
@@ -99,7 +100,7 @@ def posttext2img():
     safe_neg_prompt = "(worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
 
     # Extract the post parameters from the request
-    request_data = request.json
+    request_data = json.loads(request.data)
     prompt = request_data['prompt']
     width = request_data['width']
     height = request_data['height']
@@ -125,7 +126,7 @@ def posttext2img():
     else:
         return "Picture created in " + output_file_path + ". It is appropriate."
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5005)
+# if __name__ == '__main__':
+#     app.run(debug=True, port=5005)
 
-app.run()
+app.run(port=5005)
