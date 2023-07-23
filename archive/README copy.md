@@ -35,6 +35,9 @@ https://github.com/AUTOMATIC1111/stable-diffusion-webui/discussions/3734
 
 http://127.0.0.1:7860/docs#/
 
+How to detect nudity (Nudity Detection, NSFW content) with Machine Learning using NudeNet in Python
+https://ourcodeworld.com/articles/read/1347/how-to-detect-nudity-nudity-detection-nsfw-content-with-machine-learning-using-nudenet-in-python
+
 # launch backend server
 
 ...\Documents\StableDiffusion>python launch.py --nowebui --cors-allow-origins "\*"
@@ -94,3 +97,4 @@ https://docs.expo.dev/archive/classic-updates/building-standalone-apps/?redirect
 
 # waitress for production
 https://flask.palletsprojects.com/en/2.3.x/deploying/waitress/
+

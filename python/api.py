@@ -29,7 +29,7 @@ def save_encoded_image(b64_image: str):
         image_file.write(base64.b64decode(b64_image))
     # check NSFW
     isNSFW = nsfw_detector("./" + output_path, path)
-    return [isNSFW, path]    
+    return [isNSFW, path, filename]
 
 def nsfw_detector(image_path:str, path:str):
     # Predict multiple images. Example of array input:
@@ -45,7 +45,7 @@ def nsfw_detector(image_path:str, path:str):
     log_info += f"NSFW detection results:\n{predict_df}\n"
     write_log(path, log_info)
     #*******HERE NSFW TRESHHOLDS**********
-    if (porn > 0.04 and hentai > 0.15) or hentai > 0.3:
+    if porn > 0.01 or hentai > 0.01:
         return True # explicit content
     else:
         return False # not explicit content
@@ -120,11 +120,11 @@ def posttext2img():
     response = submit_post(txt2img_url, data)
 
     # save pictures in subfolders on date level
-    isNSFW, output_file_path = save_encoded_image(response.json()['images'][0])
+    isNSFW, output_file_path, filename = save_encoded_image(response.json()['images'][0])
     if isNSFW:
-        return "Picture created in " + output_file_path + ". It is NOT APPROPRIATE."
+        return "Picture created in " + output_file_path + ". It is NOT APPROPRIATE. File:" + filename
     else:
-        return "Picture created in " + output_file_path + ". It is appropriate."
+        return "Picture created in " + output_file_path + ". It is appropriate.. File:" + filename
 
 # if __name__ == '__main__':
 #     app.run(debug=True, port=5005)
