@@ -19,3 +19,4 @@ web-build/
 StableDiffusion/TestPictures/*
 
 python/TestPictures/*
+nsfw_detector/__pycache__/
