@@ -32,4 +32,4 @@ if __name__ == '__main__':
     print(response)
 
     # filename = time.strftime("%Y%m%d-%H%M%S") + "_picture.png"
-    # save_encoded_image(response.json()['images'][0], "TestPictures/" + filename)
+    # save_encoded_image(response.json()['images'][0], "serverPictures/" + filename)

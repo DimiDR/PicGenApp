@@ -22,7 +22,7 @@ def save_encoded_image(b64_image: str, output_path: str):
 #TODO recode to flask
 if __name__ == '__main__':
     counter = 1
-    for _ in range(100):
+    for _ in range(3):
         print("Started generation: " + str(counter))
         counter = counter + 1
         nsfw_neg_prompt = "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, (worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
@@ -38,4 +38,4 @@ if __name__ == '__main__':
         response = submit_post(txt2img_url, data)
         print(response.content)
         # filename = time.strftime("%Y%m%d-%H%M%S") + "_picture.png"
-        # save_encoded_image(response.json()['images'][0], "TestPictures/" + filename)
+        # save_encoded_image(response.json()['images'][0], "serverPictures/" + filename)

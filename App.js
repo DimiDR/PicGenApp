@@ -37,7 +37,8 @@ export default function App() {
     try {
       // Send the positive, negative prompts, and adult content flag to the backend server
       const response = await axios.post(
-        `http://192.168.0.109:7861/sdapi/v1/txt2img`,
+        // `http://192.168.0.109:7861/sdapi/v1/txt2img`,
+        `http://127.0.0.1:5005/posttext2img`,
         {
           prompt: positivePrompt,
           negative_prompt: neg_prompt,

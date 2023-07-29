@@ -11,9 +11,10 @@ from os.path import isfile, join, exists, isdir, abspath
 import os
 from flask import send_file
 from fuzzywuzzy import fuzz
+from waitress import serve
 # initialize model once for nsfw_detector
-model = predict.load_model('./python/nsfw_detector/model/saved_model.h5')
-
+model = predict.load_model('./backEnd/nsfw_detector/model/saved_model.h5')
+# model = predict.load_model('./nsfw_detector/model/saved_model.h5')
 
 def submit_post(url: str, data: dict):
     #Submit a POST request to the given URL with the given data.
@@ -21,10 +22,10 @@ def submit_post(url: str, data: dict):
 
 def save_encoded_image(b64_image: str):
     filename = time.strftime("%Y%m%d-%H%M%S") + "_picture.png"
-    path = "python/TestPictures/" + time.strftime("%Y%m%d")
+    path = "serverPictures/" + time.strftime("%Y%m%d")
     if not isdir(path):
         os.makedirs(path)
-    output_path = "python/TestPictures/" + time.strftime("%Y%m%d") + "/" + filename
+    output_path = "serverPictures/" + time.strftime("%Y%m%d") + "/" + filename
     #Save the given image to the given output path.
     with open(output_path, "wb") as image_file:
         image_file.write(base64.b64decode(b64_image))
@@ -34,7 +35,7 @@ def save_encoded_image(b64_image: str):
 
 def nsfw_detector(image_path:str, path:str):
     # Predict multiple images. Example of array input:
-    # return predict.classify(model, ['./python/TestPictures/hentai_test.jpg', './python/TestPictures/soft_hentai.png'])
+    # return predict.classify(model, ['./serverPictures/hentai_test.jpg', './serverPictures/soft_hentai.png'])
     # Predict single image
     predict_df = predict.classify(model, [image_path])
     hentai = predict_df[image_path]["hentai"]
@@ -154,7 +155,10 @@ def posttext2img():
     else:
         return "Picture created in " + output_file_path + ". It is appropriate.. File:" + filename
 
-# if __name__ == '__main__':
-#     app.run(debug=True, port=5005)
+if __name__ == '__main__':
+    serve(app, port=5005)
+    # serve(app, port=5005, threads=2)
+    # app.run(debug=True, port=5005)
 
-app.run(port=5005)
+# # run flask
+# app.run(port=5005)

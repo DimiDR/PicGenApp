@@ -16,7 +16,5 @@ web-build/
 # Temporary files created by Metro to check the health of the file watcher
 .metro-health-check*
 
-StableDiffusion/TestPictures/*
-
-python/TestPictures/*
 nsfw_detector/__pycache__/
+serverPictures
