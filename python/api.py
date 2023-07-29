@@ -10,6 +10,7 @@ from os import listdir
 from os.path import isfile, join, exists, isdir, abspath
 import os
 from flask import send_file
+from fuzzywuzzy import fuzz
 # initialize model once for nsfw_detector
 model = predict.load_model('./python/nsfw_detector/model/saved_model.h5')
 
@@ -67,6 +68,29 @@ def write_log(image_path: str, log_info:str):
             log_file.write(log_info)
     log_info = ""
 
+def contains_nsfw_words(input_string, threshold=70):
+    nsfw_words = [
+        "nsfw",
+        "explicit",
+        "adult",
+        "porn",
+        "xxx",
+        "sexy",
+        "sex",
+        "naked",
+        "erotic",
+        "fucking",
+        "vagina",
+        "penis",
+        "dick",
+        # Add more NSFW words to this list if needed
+    ]
+    input_string = input_string.lower()
+    for nsfw_word in nsfw_words:
+        if fuzz.partial_ratio(nsfw_word.lower(), input_string) >= threshold:
+            return True
+    return False
+
 #*** Start Service ****
 app = Flask(__name__)
 
@@ -74,7 +98,7 @@ app = Flask(__name__)
 def server_test():
     return "Server is running"
 
-@app.route('/text2img', methods=['GET'])
+@app.route('/gettext2img', methods=['GET'])
 def text2img():
     nsfw_neg_prompt = "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, (worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
     safe_neg_prompt = "(worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
@@ -94,7 +118,7 @@ def text2img():
         write_log(output_file_path, "Picture created in " + output_file_path + ". It is appropriate.")
         return "Picture created in " + output_file_path + ". It is appropriate."
 
-@app.route('/text2img', methods=['POST'])
+@app.route('/posttext2img', methods=['POST'])
 def posttext2img():
     nsfw_neg_prompt = "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, (worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
     safe_neg_prompt = "(worst quality, low quality:1.4), monochrome, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, deformed eyes, ((disfigured)), bad art, deformed, ((extra limbs)), ((duplicate)), morbid, multilated, bad body, on hand with less than 5 fingers, crown , stacked torses, stacked hands, totem pole"
@@ -105,6 +129,10 @@ def posttext2img():
     width = request_data['width']
     height = request_data['height']
     steps = request_data['steps']
+
+    # check prompt for NSFW
+    if contains_nsfw_words(prompt):
+        return "there is a NSFW word in the prompt"
 
     # Construct the data payload for the POST request
     data = {
