@@ -1,3 +1,3 @@
 @echo off
 git pull
-python launch.py --nowebui --listen
+python launch.py --nowebui --listen --xformers

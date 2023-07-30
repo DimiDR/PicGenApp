@@ -133,10 +133,7 @@ def posttext2img():
     height = request_data['height']
     steps = request_data['steps']
 
-    # check prompt for NSFW
-    if contains_nsfw_words(prompt):
-        return "there is a NSFW word in the prompt"
-
+    
     # Construct the data payload for the POST request
     data = {
         'prompt': prompt,
@@ -152,15 +149,16 @@ def posttext2img():
 
     # save pictures in subfolders on date level
     isNSFW, output_file_path, filename = save_encoded_image(response.json()['images'][0])
-    return response.json()['images'][0]
-    # return response
+
+    # check prompt for NSFW
+    if contains_nsfw_words(prompt):
+        return "there is pornographic content in the prompt"
     if isNSFW:
-        return "Picture created in " + output_file_path + ". It is NOT APPROPRIATE. File:" + filename
-    else:
-        return "Picture created in " + output_file_path + ". It is appropriate.. File:" + filename
+        return "there picture contains pornographic content"
+    return response.json()['images'][0]
 
 if __name__ == '__main__':
-    server_mode = "Dev"
+    server_mode = "Dev1"
     if server_mode == "Dev":
         app.run(host='0.0.0.0', port=5005)
     else:

@@ -22,14 +22,34 @@ export default function App() {
   const [width, setWidth] = useState(512); // 566
   const [loading, setLoading] = useState(false);
   const [timerActive, setTimerActive] = useState(false);
+  // state to prevent multiple button presses
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const restartTimer = () => {
     setTimerActive(false);
   };
 
   const generatePicture = async () => {
+    let server_status;
     let response;
+
+    // check if server is running
+    try {
+      server_status = await axios.get(
+        `http://192.168.0.109:5005/`)
+        // alert(server_status.data)
+      } catch (error) {
+        alert("Server is not online.")
+        return;
+      }
+
+    // Prevent multiple button presses during image generation
+    if (isGenerating) {
+      return;
+    }
+    setIsGenerating(true);
     setTimerActive(true);
+
     // Add NSFW to Neg Prompt if checkmark for Adult Content is checked
     let nsfw_neg_prompt =
       "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, " + negativePrompt;
@@ -39,37 +59,44 @@ export default function App() {
       negative_prompt: neg_prompt,
       width: width,
       height: height,
-      steps: 30
+      steps: 20
     }
     //Call API
-    // try {
-      // Send the positive, negative prompts, and adult content flag to the backend server
-      // alert("HI")
-        response = await axios.post(
-          `http://192.168.0.109:5005/posttext2img`, requestData
-          , {
-            httpAgent: false,
-            httpsAgent: false,
-            timeout: 5000,
-          })
-          .then(response => {
-            // Handle the response
-            //setGeneratedImage(response.data.images[0]);
+      setLoading(true);
+      await axios.post(
+        `http://192.168.0.109:5005/posttext2img`,
+        requestData,
+        {
+          httpAgent: false,
+          httpsAgent: false,
+          timeout: 30000,
+        }
+      )
+      .then(response => {
+        alert(response.data)
+        // Handle the response
+        if (response && response.data) {
+          // check if the string is a base64 image
+          var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+          if (base64regex.test(response.data)){
             setGeneratedImage(response.data);
-            setLoading(false);
-          })
-          .catch(error => {
-            // Handle the error
-            setLoading(false);
-            alert(error);
-          });
-
-      
-    // } catch (error) {
-    //   console.error("Error generating picture:", error);
-    //   setLoading(false);
-    // }
+          }
+        } else {
+          // Handle the case when the response doesn't contain a valid image
+          // console.error("Invalid image response:", response.data);
+          // use this as there will be either an image or a text for NSFW. Later send complex array, to check true/false statements
+          alert(response.data)
+        }
+        setIsGenerating(false); // Allow button press again after generation is done
+      })
+      .catch(error => {
+        // Handle the error
+        console.error("Error generating picture:", error);
+        setIsGenerating(false); // Allow button press again after generation is done
+      });
+    setLoading(false);
   };
+
 
   return (
     <View style={styles.container}>
@@ -123,7 +150,7 @@ export default function App() {
       <Button
         title={!timerActive ? "Generate Picture" : "Waiting"}
         onPress={generatePicture}
-        disabled={timerActive}
+        disabled={isGenerating || timerActive}
       />
       <Timer timerActive={timerActive} restartTimer={restartTimer} />
       <StatusBar style="auto" />
