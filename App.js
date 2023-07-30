@@ -28,31 +28,47 @@ export default function App() {
   };
 
   const generatePicture = async () => {
+    let response;
     setTimerActive(true);
     // Add NSFW to Neg Prompt if checkmark for Adult Content is checked
     let nsfw_neg_prompt =
       "(nsfw:1), (fucking:1), (naked:1), (sex:1), vagina, " + negativePrompt;
     let neg_prompt = allowAdultContent ? nsfw_neg_prompt : negativePrompt;
-    //Call API
-    try {
-      // Send the positive, negative prompts, and adult content flag to the backend server
-      const response = await axios.post(
-        // `http://192.168.0.109:7861/sdapi/v1/txt2img`,
-        `http://127.0.0.1:5005/posttext2img`,
-        {
-          prompt: positivePrompt,
-          negative_prompt: neg_prompt,
-          width: width,
-          height: height,
-          steps: 50,
-        }
-      );
-      setGeneratedImage(response.data.images[0]);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error generating picture:", error);
-      setLoading(false);
+    requestData = {
+      prompt: positivePrompt,
+      negative_prompt: neg_prompt,
+      width: width,
+      height: height,
+      steps: 30
     }
+    //Call API
+    // try {
+      // Send the positive, negative prompts, and adult content flag to the backend server
+      // alert("HI")
+        response = await axios.post(
+          `http://192.168.0.109:5005/posttext2img`, requestData
+          , {
+            httpAgent: false,
+            httpsAgent: false,
+            timeout: 5000,
+          })
+          .then(response => {
+            // Handle the response
+            //setGeneratedImage(response.data.images[0]);
+            setGeneratedImage(response.data);
+            setLoading(false);
+          })
+          .catch(error => {
+            // Handle the error
+            setLoading(false);
+            alert(error);
+          });
+
+      
+    // } catch (error) {
+    //   console.error("Error generating picture:", error);
+    //   setLoading(false);
+    // }
   };
 
   return (

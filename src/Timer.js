@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 
 const Timer = ({ restartTimer, timerActive }) => {
-  const timer = 2;// set timer
+  const timer = 30;// set timer
   const [seconds, setSeconds] = useState(timer);
 
   useEffect(() => {

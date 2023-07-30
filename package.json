@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "expo": "^48.0.0",
-    "expo-checkbox": "^2.3.1",
-    "expo-sharing": "^11.2.2",
-    "expo-status-bar": "~1.4.4",
-    "react": "18.2.0",
-    "react-native": "0.71.8",
+    "expo": "^49.0.6",
+    "expo-checkbox": "^2.4.0",
+    "expo-sharing": "^11.5.0",
+    "expo-status-bar": "^1.6.0",
+    "react": "^18.2.0",
+    "react-native": "^0.72.3",
     "react-native-fetch-blob": "^0.10.8"
   },
   "devDependencies": {

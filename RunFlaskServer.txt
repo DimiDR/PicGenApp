@@ -1,10 +1,10 @@
 Run the Stable diffusion server first
 
 Run Conda + backend settings + flask api:
-conda activate NSFW
-python python/changeBackenSettings.py
-python python/api.py
+conda activate NSFW3
+python backEnd/changeBackenSettings.py
+python backEnd/api.py
 
 Run python test of flask
-conda activate NSFW
-python python/test_flask.py
+conda activate NSFW3
+python backEnd/test_flask.py

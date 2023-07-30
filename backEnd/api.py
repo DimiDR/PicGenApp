@@ -1,4 +1,5 @@
 from flask import Flask, Response, request
+from flask_cors import CORS
 import pandas as pd
 #import pdfkit
 import json
@@ -94,6 +95,7 @@ def contains_nsfw_words(input_string, threshold=70):
 
 #*** Start Service ****
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def server_test():
@@ -150,13 +152,19 @@ def posttext2img():
 
     # save pictures in subfolders on date level
     isNSFW, output_file_path, filename = save_encoded_image(response.json()['images'][0])
+    return response.json()['images'][0]
+    # return response
     if isNSFW:
         return "Picture created in " + output_file_path + ". It is NOT APPROPRIATE. File:" + filename
     else:
         return "Picture created in " + output_file_path + ". It is appropriate.. File:" + filename
 
 if __name__ == '__main__':
-    serve(app, port=5005)
+    server_mode = "Dev"
+    if server_mode == "Dev":
+        app.run(host='0.0.0.0', port=5005)
+    else:
+        serve(app, host='0.0.0.0', port=5005)
     # serve(app, port=5005, threads=2)
     # app.run(debug=True, port=5005)
 
