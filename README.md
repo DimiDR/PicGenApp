@@ -42,3 +42,8 @@ Stable diffusion server docs
 - For NSFW Detector: TF installation can be checked here: https://www.tensorflow.org/install/pip#windows-native I have some limitation, as I am running on Windows Native
 - For NSFW Detector: If this happens: "OSError: SavedModel file does not exist at: C:\Users\XXXX\AppData\Local\Temp\tfhub_modules\2da11c2dXXXX728da8063a4bd\{saved_model.pbtxt|saved_model.pb}" go to this folder and remove the folder "2da11c2dXXXX728da8063a4bd". The system will regenerate it.
 - expo debugger  - add to app.json ""expo":...,{"jsEngine": "jsc", ...}" , run in degbug mode - how?
+- uninstalled react-native-fetch-blob because expo build was not working "A problem occurred evaluating project ':react-native-fetch-blob'."
+
+
+build: eas build -p android --profile preview
+https://expo.dev/accounts/dimitri11552/projects/Anime-Girl-AI-Creator/builds/66d35d5b-d9ca-4750-993b-fdf43052cc2a

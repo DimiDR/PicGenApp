@@ -48,7 +48,7 @@ def nsfw_detector(image_path:str, path:str):
     log_info += f"NSFW detection results:\n{predict_df}\n"
     write_log(path, log_info)
     #*******HERE NSFW TRESHHOLDS**********
-    if porn > 0.01 or hentai > 0.01:
+    if porn > 0.02 or hentai > 0.02:
         return True # explicit content
     else:
         return False # not explicit content
@@ -158,7 +158,7 @@ def posttext2img():
     return response.json()['images'][0]
 
 if __name__ == '__main__':
-    server_mode = "Dev1"
+    server_mode = "Dev"
     if server_mode == "Dev":
         app.run(host='0.0.0.0', port=5005)
     else:

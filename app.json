@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "PicGenApp",
-    "slug": "PicGenApp",
+    "name": "Anime Girl AI Creator",
+    "slug": "Anime-Girl-AI-Creator",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon/icon.png",
     "jsEngine": "jsc",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,12 +20,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dimitri11552.AnimeGirlAICreator"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d973a6ac-63ba-4508-8488-3ab5838437d8"
+      }
     }
   }
 }
