@@ -18,3 +18,4 @@ web-build/
 
 nsfw_detector/__pycache__/
 serverPictures
+backEnd/nsfw_detector/customDetector/classes
