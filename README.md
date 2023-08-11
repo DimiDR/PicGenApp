@@ -15,7 +15,7 @@ Runs on https://expo.dev/
 Pathon with multiple servers. Runs on local system. Graphic card user GTX 1080 TI.
 - Stable Diffusion server loaded with Automatic1111 package. https://github.com/AUTOMATIC1111/
 - Flask Server to have a customizable server leyer on top of stable diffusion. Stable diffusion server will be in standard and updated by Automatic1111. "Waitress" for production WSGI server to the internet. https://flask.palletsprojects.com/en/2.3.x/deploying/waitress/, you need Python 3.10 for the waitress support, since waitress 2.1.0 release
-- NSFW Detector runs in Flast server, to check for adult content. But it is not an own micro service. It uses code and model of GantMan, however coding was adjusted to fit the requirenments. https://github.com/GantMan/nsfw_model
+- NSFW Detector runs in Flast server, to check for adult content. But it is not an own micro service. It uses code and model of GantMan, however coding was adjusted to fit the requirenments. https://github.com/GantMan/nsfw_model, after testing chosen this parameter for nsfw filtering "porn > 0.05 or hentai > 0.05 or sexy > 0.05".
 - used this model https://github.com/GantMan/nsfw_model/issues/9, https://s3.amazonaws.com/ir_public/ai/nsfw_models/february_2019_nsfw.299x299.h5
 
 Testing can be done also on pythis level with the files test_flask.py and test_stablediffusion.py.
@@ -44,6 +44,7 @@ Stable diffusion server docs
 - expo debugger  - add to app.json ""expo":...,{"jsEngine": "jsc", ...}" , run in degbug mode - how?
 - uninstalled react-native-fetch-blob because expo build was not working "A problem occurred evaluating project ':react-native-fetch-blob'."
 - "Trying to load a model of incompatible/unknown type. 'C:\Users\...\AppData\Local\Temp\tfhub_modules\2da11c2dc734eb866595cc05037728da8063a4bd' contains neither 'saved_model.pb' nor 'saved_model.pbtxt'" delete the content of C:\Users\...\AppData\Local\Temp\tfhub_modules\
+- "TypeError: _open(...).default.openApp is not a function" for debugger. Tried this https://github.com/jhen0409/react-native-debugger/issues/760, "npx expo start --tunnel"
 
 build: eas build -p android --profile preview
 https://expo.dev/accounts/dimitri11552/projects/Anime-Girl-AI-Creator/builds/66d35d5b-d9ca-4750-993b-fdf43052cc2a

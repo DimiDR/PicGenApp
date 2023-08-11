@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow import keras
 import tensorflow_hub as hub
 
-IMAGE_DIM = 224   # required/default image dimensionality
+IMAGE_DIM = 299   # required/default image dimensionality
 
 def load_images(image_paths, image_size, verbose=True):
     '''

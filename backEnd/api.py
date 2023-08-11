@@ -41,6 +41,7 @@ def nsfw_detector(image_path:str, path:str):
     predict_df = predict.classify(model, [image_path])
     hentai = predict_df[image_path]["hentai"]
     porn = predict_df[image_path]["porn"]
+    sexy = predict_df[image_path]["sexy"]
 
     # Logging
     log_info = f"NSFW checked for: {image_path}\n"
@@ -48,7 +49,7 @@ def nsfw_detector(image_path:str, path:str):
     log_info += f"NSFW detection results:\n{predict_df}\n"
     write_log(path, log_info)
     #*******HERE NSFW TRESHHOLDS**********
-    if porn > 0.02 or hentai > 0.02:
+    if porn > 0.05 or hentai > 0.05 or sexy > 0.05:
         return True # explicit content
     else:
         return False # not explicit content
@@ -155,6 +156,7 @@ def posttext2img():
         return "there is pornographic content in the prompt"
     if isNSFW:
         return "there picture contains pornographic content"
+    #return "test"
     return response.json()['images'][0]
 
 if __name__ == '__main__':

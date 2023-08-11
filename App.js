@@ -73,20 +73,22 @@ export default function App() {
         }
       )
       .then(response => {
-        alert(response.data)
-        // Handle the response
-        if (response && response.data) {
-          // check if the string is a base64 image
-          var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-          if (base64regex.test(response.data)){
-            setGeneratedImage(response.data);
-          }
-        } else {
-          // Handle the case when the response doesn't contain a valid image
-          // console.error("Invalid image response:", response.data);
-          // use this as there will be either an image or a text for NSFW. Later send complex array, to check true/false statements
-          alert(response.data)
-        }
+        setGeneratedImage(response.data);
+        //alert(response.data) //data is too big in 64b format
+        // // Handle the response
+        // if (response && response.data) {
+        //   // check if the string is a base64 image
+        //   var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+        //   if (base64regex.test(response.data)){
+        //     setGeneratedImage(response.data);
+        //   }
+          
+        // } else {
+        //   // Handle the case when the response doesn't contain a valid image
+        //   // console.error("Invalid image response:", response.data);
+        //   // use this as there will be either an image or a text for NSFW. Later send complex array, to check true/false statements
+        //   //alert(response.data)
+        // }
         setIsGenerating(false); // Allow button press again after generation is done
       })
       .catch(error => {
